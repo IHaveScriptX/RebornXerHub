@@ -1,4 +1,4 @@
-Version = "beta 0.1"
+Version = "beta 0.2"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2258,16 +2258,16 @@ spawn(function()
         pcall(function()
             if _G.SST.Select_Method == "Behind" then
                 -- ไปด้านหลัง (Z)
-                MethodFarm = CFrame.new(0, 0, DistanceMob) -- กำหนดพิกัดที่ด้านหลัง
+                MethodFarm = CFrame.new(0, 0, _G.SST.DistanceMob) -- กำหนดพิกัดที่ด้านหลัง
             elseif _G.SST.Select_Method == "Below" then
                 -- ไปข้างล่าง (Y) และหมุน 90 องศาในแกน X (เพื่อหมุนจากด้านล่าง)
-                MethodFarm = CFrame.new(0, -DistanceMob, 0) * CFrame.Angles(math.rad(90), 0, 0)
+                MethodFarm = CFrame.new(0, -_G.SST.DistanceMob, 0) * CFrame.Angles(math.rad(90), 0, 0)
             elseif _G.SST.Select_Method == "Upper" then
                 -- ไปข้างบน (Y) และหมุน -90 องศาในแกน X (เพื่อหมุนจากด้านบน)
-                MethodFarm = CFrame.new(0, DistanceMob, 0) * CFrame.Angles(math.rad(-90), 0, 0)
+                MethodFarm = CFrame.new(0, _G.SST.DistanceMob, 0) * CFrame.Angles(math.rad(-90), 0, 0)
             else
                 -- ค่าพื้นฐาน (หากไม่ตรงกับ "Behind", "Below", "Upper")
-				MethodFarm = CFrame.new(0, 0, DistanceMob) -- กำหนดพิกัดที่ด้านหลัง
+				MethodFarm = CFrame.new(0, 0, _G.SST.DistanceMob) -- กำหนดพิกัดที่ด้านหลัง
             end
         end)
     end

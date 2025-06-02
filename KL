@@ -3045,7 +3045,10 @@ end
 
 
 ------------------------------------------------- Ui ----------------------------------------------------------
-if game.PlaceId == 6381829480 then
+if game.PlaceId == 15759515082 then
+    WorldCheck = 3
+	MapPlaceId = "15759515082"
+elseif game.PlaceId == 6381829480 then
 	WorldCheck = 2
 	MapPlaceId = "6381829480"
 elseif game.PlaceId == 4520749081 then
@@ -3063,7 +3066,7 @@ local Main = RenUi:AddTab("Farm","6026568198")
 	
 	
 	Main:AddSeperatorRight("Sea Chack")
-
+if WorldCheck == 2 then
 	local SeaChack = Main:AddLabelRight("")
 
 function SeaChackSent()
@@ -3104,7 +3107,24 @@ end)
             end)
         end
          end)
+        end
+if WorldCheck == 3 then
+        	 Sea3Check = Main:AddLabelRight("")
+  
 
+             function ShipChackSent()		
+						TimeShip = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.StarterFrame.LegacyPoseFrame.ThirdSea.TextLabel.Text
+						Sea3Check:Set("SeaEvent  : "..TimeShip)   
+                end
+
+         spawn(function()
+        while task.wait() do
+            pcall(function()
+				ShipChackSent()
+            end)
+        end
+         end)
+        end
     Main:AddSeperatorRight("Settings")
     
 Setting:AddButtonLeft("Copy CFrame",function()

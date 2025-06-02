@@ -1,4 +1,4 @@
-Version = "beta 0.3"
+Version = "beta 0.3.1"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2207,7 +2207,7 @@ end
         SS()
     end)
     MAIN:AddSeperatorL("")
-    local DistanceAura = _G.SST.DistanceAura or 1000
+ DistanceAura = _G.SST.DistanceAura or 1000
 
     MAIN:AddSliderL("Distance Mob Aura",1,5000,_G.SST.DistanceAura,function(value)
         DistanceAura = value

@@ -1,4 +1,4 @@
-Version = "beta 0.2"
+Version = "beta 0.3"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2124,7 +2124,7 @@ end)
     spawn(function()
         pcall(function()
             while task.wait() do
-                if _G.SST.Auto_Farm_Level then
+                if _G.SST.Auto_Farm_Level or Mob_Aura then
 					local character = game:GetService("Players").LocalPlayer.Character
 					local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
 					if humanoidRootPart and not humanoidRootPart:FindFirstChild("BodyClip") then
@@ -2151,7 +2151,7 @@ end)
   spawn(function()
         pcall(function()
             game:GetService("RunService").Stepped:Connect(function()
-                if Auto_Farm_Level then
+                if Auto_Farm_Level or Mob_Aura then
                     for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false    
@@ -2210,7 +2210,7 @@ end
     local DistanceAura = _G.SST.DistanceAura or 1000
 
     MAIN:AddSliderL("Distance Mob Aura",1,5000,_G.SST.DistanceAura,function(value)
-        DistanceAura = a
+        DistanceAura = value
         _G.SST.DistanceAura = DistanceAura
         SS()
     end)
@@ -2221,17 +2221,19 @@ end
     end)
     
     spawn(function()
-		while task.wait() do
+		while task.wait(0) do
 			pcall(function()
 				if _G.SST.Mob_Aura then
 					for i,v in pairs(game:GetService("Workspace").Monster:GetChildren()) do
                         if v.Name == "Mon" or v.Name == "Boss" then
-						    if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and (v.HumanoidRootPart.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= _G.SST.DistanceAura then
-							    repeat task.wait()
-								Haki()
-                                TP(v.HumanoidRootPart.CFrame * MethodFarm)
-                                Click()
-							    until not _G.SST.Mob_Aura or not v.Parent or v.Humanoid.Health <= 0
+							for e,t in pairs(v:GetChildren()) do
+						    	if t:FindFirstChild("Humanoid") and t:FindFirstChild("HumanoidRootPart") and t.Humanoid.Health > 0 and (t.HumanoidRootPart.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= _G.SST.DistanceAura then
+							    	repeat task.wait(0)
+										Haki()
+                                		TP(t.HumanoidRootPart.CFrame * MethodFarm)
+                                		Click()
+							    	until not _G.SST.Mob_Aura or not t.Parent or t.Humanoid.Health <= 0
+								end
 						    end
                         end
 					end
@@ -2251,12 +2253,7 @@ MAIN:AddDropdownR("Select Method",MethodList,_G.SST.Select_Method,function(value
     Select_Method = value
 	_G.SST.Select_Method = Select_Method
 	SS()
-end)
-
-spawn(function()
-    while wait(1) do 
-        pcall(function()
-            if _G.SST.Select_Method == "Behind" then
+	if _G.SST.Select_Method == "Behind" then
                 -- ไปด้านหลัง (Z)
                 MethodFarm = CFrame.new(0, 0, _G.SST.DistanceMob) -- กำหนดพิกัดที่ด้านหลัง
             elseif _G.SST.Select_Method == "Below" then
@@ -2269,9 +2266,9 @@ spawn(function()
                 -- ค่าพื้นฐาน (หากไม่ตรงกับ "Behind", "Below", "Upper")
 				MethodFarm = CFrame.new(0, 0, _G.SST.DistanceMob) -- กำหนดพิกัดที่ด้านหลัง
             end
-        end)
-    end
 end)
+
+
 local DistanceMob = _G.SST.DistanceMob or 10
 MAIN:AddSliderR("Distance",1,100,_G.SST.DistanceMob,function(value)
 	DistanceMob = value

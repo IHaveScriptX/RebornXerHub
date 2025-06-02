@@ -1,4 +1,4 @@
-Version = "beta 0"
+Version = "beta 0.1"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2240,14 +2240,14 @@ end
 		end
 	end)
 
-MAIN:AddDropdownRight("Select Weapon", {"Melee","Sword","Fruit"},_G.SST.Select_Weapon, function(value)
+MAIN:AddDropdownR("Select Weapon", {"Melee","Sword","Fruit"},_G.SST.Select_Weapon, function(value)
     Select_Weapon = value
 	_G.SST.Select_Weapon = Select_Weapon
 	SS()
 end)
 
 MethodList = {"Behind","Below","Upper"}
-MAIN:AddDropdownRight("Select Method",MethodList,_G.SST.Select_Method,function(value)
+MAIN:AddDropdownR("Select Method",MethodList,_G.SST.Select_Method,function(value)
     Select_Method = value
 	_G.SST.Select_Method = Select_Method
 	SS()
@@ -2273,7 +2273,7 @@ spawn(function()
     end
 end)
 local DistanceMob = _G.SST.DistanceMob or 10
-MAIN:AddSliderRight("Distance",1,100,_G.SST.DistanceMob,function(value)
+MAIN:AddSliderR("Distance",1,100,_G.SST.DistanceMob,function(value)
 	DistanceMob = value
 	_G.SST.DistanceMob = DistanceMob
 	SS()

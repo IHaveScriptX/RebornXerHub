@@ -1,4 +1,4 @@
-Version = "beta 0.3.1"
+Version = "beta 0.4"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2111,7 +2111,7 @@ spawn(function()
 			    WeaPon_Select = playerStats.DFName.Value 
 			    TypeWeapon = "DF"
 		    end
-		    wait() -- หยุดสักครู่ก่อนที่จะวน loop ต่อ
+		    tasl.wait(0) -- หยุดสักครู่ก่อนที่จะวน loop ต่อ
 	    end)
     end
 end)
@@ -2121,32 +2121,39 @@ end)
     end
 
 
-    spawn(function()
-        pcall(function()
-            while task.wait() do
-                if _G.SST.Auto_Farm_Level or Mob_Aura then
-					local character = game:GetService("Players").LocalPlayer.Character
-					local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
-					if humanoidRootPart and not humanoidRootPart:FindFirstChild("BodyClip") then
-						local Noclip = Instance.new("BodyVelocity")
-						Noclip.Name = "BodyClip"
-						Noclip.Parent = humanoidRootPart
-						Noclip.MaxForce = Vector3.new(100000, 100000, 100000)
-						Noclip.Velocity = Vector3.new(0, 0, 0)
-					end
-				else
-					local character = game:GetService("Players").LocalPlayer.Character
-					local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
-					if humanoidRootPart then
-						local bodyClip = humanoidRootPart:FindFirstChild("BodyClip")
-						if bodyClip then
-							bodyClip:Destroy()
-						end
-					end
-				end
-			end
-		end)
-	end)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+spawn(function()
+    pcall(function()
+        RunService.Heartbeat:Connect(function()
+            local character = LocalPlayer.Character
+            local hrp = character and character:FindFirstChild("HumanoidRootPart")
+            local HumanoidPlayer = character:FindFirstChild("Humanoid")
+            
+            if _G.SST.Auto_Farm_Level or Mob_Aura then
+                if hrp and not hrp:FindFirstChild("BodyClip") then
+                    local noclip = Instance.new("BodyVelocity")
+                    noclip.Name = "BodyClip"
+                    noclip.MaxForce = Vector3.new(1e5, 1e5, 1e5)
+                    noclip.Velocity = Vector3.new(0, 0, 0)
+                    noclip.Parent = hrp
+                    HumanoidPlayer.AutoRotate = false
+                end
+            else
+                if hrp then
+                    local clip = hrp:FindFirstChild("BodyClip")
+                    if clip then
+                        clip:Destroy()
+                        HumanoidPlayer.AutoRotate = true
+                    end
+                end
+            end
+        end)
+    end)
+end)
+
     
   spawn(function()
         pcall(function()

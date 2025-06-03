@@ -1,4 +1,4 @@
-Version = "beta 0.4.2"
+Version = "beta 0.4.3"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2129,6 +2129,25 @@ spawn(function()
     pcall(function()
         while task.wait() do
             local character = LocalPlayer.Character
+            local HumanoidPlayer = character:FindFirstChild("Humanoid")
+            if HumanoidPlayer.AutoRotate = true then
+                HumanoidPlayer.AutoRotate = false
+            end
+        end
+    end)
+end)
+
+
+
+
+
+
+
+
+spawn(function()
+    pcall(function()
+        while task.wait() do
+            local character = LocalPlayer.Character
             local hrp = character and character:FindFirstChild("HumanoidRootPart")
             local HumanoidPlayer = character:FindFirstChild("Humanoid")
             
@@ -2146,7 +2165,7 @@ spawn(function()
                     local clip = hrp:FindFirstChild("BodyClip")
                     if clip then
                         clip:Destroy()
-                        HumanoidPlayer.AutoRotate = true
+                        
                     end
                 end
             end

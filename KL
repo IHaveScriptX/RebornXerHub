@@ -1,4 +1,4 @@
-Version = "beta 0.4.1"
+Version = "beta 0.4.2"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2111,7 +2111,7 @@ spawn(function()
 			    WeaPon_Select = playerStats.DFName.Value 
 			    TypeWeapon = "DF"
 		    end
-		    tasl.wait(0) -- หยุดสักครู่ก่อนที่จะวน loop ต่อ
+		    wait(0) -- หยุดสักครู่ก่อนที่จะวน loop ต่อ
 	    end)
     end
 end)

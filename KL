@@ -1,4 +1,4 @@
-Version = "beta 0.ภ.ภ"
+Version = "beta 0.4.5"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2125,16 +2125,15 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
-spawn(function()
-    pcall(function()
-        while task.wait() do
-            local character = LocalPlayer.Character
-            local HumanoidPlayer = character and character:FindFirstChild("Humanoid")
-            if HumanoidPlayer then
-                HumanoidPlayer.AutoRotate = false
-            end
-        end
-    end)
+local RunService = game:GetService("RunService")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+
+RunService.Stepped:Connect(function()
+    local character = LocalPlayer.Character
+    local humanoid = character and character:FindFirstChild("Humanoid")
+    if humanoid then
+        humanoid.AutoRotate = false
+    end
 end)
 
 
@@ -2254,16 +2253,47 @@ end
 							    	repeat task.wait(0)
 										Haki()
                                 		TP(t.HumanoidRootPart.CFrame * MethodFarm)
+										ApplyLookAtTarget(t.HumanoidRootPart.Position)
                                 		Click()
 							    	until not _G.SST.Mob_Aura or not t.Parent or t.Humanoid.Health <= 0
 								end
 						    end
                         end
 					end
+				else
+						RemoveGyro()
 			    end
 		    end)
 		end
 	end)
+
+function ApplyLookAtTarget(targetPos)
+    local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+
+    local lookCFrame = CFrame.new(hrp.Position, targetPos)
+
+    local gyro = hrp:FindFirstChild("FarmGyro")
+    if not gyro then
+        gyro = Instance.new("BodyGyro")
+        gyro.Name = "FarmGyro"
+        gyro.MaxTorque = Vector3.new(1e6, 1e6, 1e6)
+        gyro.D = 500
+        gyro.P = 1e6
+        gyro.Parent = hrp
+    end
+    gyro.CFrame = lookCFrame
+end
+function RemoveGyro()
+    local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        local gyro = hrp:FindFirstChild("FarmGyro")
+        if gyro then
+            gyro:Destroy()
+        end
+    end
+end
+
 
 MAIN:AddDropdownR("Select Weapon", {"Melee","Sword","Fruit"},_G.SST.Select_Weapon, function(value)
     Select_Weapon = value
@@ -2281,10 +2311,10 @@ MAIN:AddDropdownR("Select Method",MethodList,_G.SST.Select_Method,function(value
                 MethodFarm = CFrame.new(0, 0, _G.SST.DistanceMob) -- กำหนดพิกัดที่ด้านหลัง
             elseif _G.SST.Select_Method == "Below" then
                 -- ไปข้างล่าง (Y) และหมุน 90 องศาในแกน X (เพื่อหมุนจากด้านล่าง)
-                MethodFarm = CFrame.new(0, -_G.SST.DistanceMob, 0) * CFrame.Angles(math.rad(90), 0, 0)
+                MethodFarm = CFrame.new(0, -_G.SST.DistanceMob, 0) 
             elseif _G.SST.Select_Method == "Upper" then
                 -- ไปข้างบน (Y) และหมุน -90 องศาในแกน X (เพื่อหมุนจากด้านบน)
-                MethodFarm = CFrame.new(0, _G.SST.DistanceMob, 0) * CFrame.Angles(math.rad(-90), 0, 0)
+                MethodFarm = CFrame.new(0, _G.SST.DistanceMob, 0) 
             else
                 -- ค่าพื้นฐาน (หากไม่ตรงกับ "Behind", "Below", "Upper")
 				MethodFarm = CFrame.new(0, 0, _G.SST.DistanceMob) -- กำหนดพิกัดที่ด้านหลัง

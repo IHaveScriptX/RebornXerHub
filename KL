@@ -1,4 +1,4 @@
-Version = "beta 0.4"
+Version = "beta 0.4.1"
 
 function loadcheck()
     local fileName = "RebornXer Hub King Legacy V2 [" .. game.Players.LocalPlayer.Name .. "].json"
@@ -2127,7 +2127,7 @@ local LocalPlayer = Players.LocalPlayer
 
 spawn(function()
     pcall(function()
-        RunService.Heartbeat:Connect(function()
+        while task.wait() do
             local character = LocalPlayer.Character
             local hrp = character and character:FindFirstChild("HumanoidRootPart")
             local HumanoidPlayer = character:FindFirstChild("Humanoid")
@@ -2150,7 +2150,7 @@ spawn(function()
                     end
                 end
             end
-        end)
+        end
     end)
 end)
 
